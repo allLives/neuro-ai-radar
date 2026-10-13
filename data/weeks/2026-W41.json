@@ -1,0 +1,546 @@
+{
+  "id": "2026-W41",
+  "title": "预测、记忆与认知地图",
+  "subtitle": "从潜在世界模型走向可迁移的内部表征",
+  "from_date": "2026-10-05",
+  "to_date": "2026-10-11",
+  "published_at": "2026-10-13",
+  "edition": 41,
+  "curation": "人工精选·试刊",
+  "method_note": "本期来自此前的文献速递对话，已部分核对原文；部分条目尚未完成逐篇元数据复核。后续自动版将保留来源与可靠性标记。",
+  "topline": "世界模型不再只比谁预测得准；持续学习开始重新讨论“何时学习”以及认知地图如何跨感官形成。",
+  "articles": [
+    {
+      "id": "w41-01",
+      "title": "RoboJEPA: Scaling Robotic Latent World Models",
+      "authors": "Artem Zholus et al.",
+      "venue": "arXiv",
+      "date": "2026-10-07",
+      "url": "https://arxiv.org/abs/2610.10515",
+      "kind": "preprint",
+      "category": "世界模型",
+      "level": "重点精读",
+      "tags": [
+        "JEPA",
+        "具身智能",
+        "机器人"
+      ],
+      "summary": "在12类机器人形态的数据上研究潜在世界模型的规模规律，并用潜在预测进行机器人规划。作者报告潜在预测误差与实际规划表现具有相关性。",
+      "angle": "能否用任务相关的潜在预测质量代替像素重构质量评估世界模型？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-02",
+      "title": "Continual Learning without Continual Training",
+      "authors": "Nikita Narayanan et al.",
+      "venue": "arXiv",
+      "date": "2026-10-07",
+      "url": "https://arxiv.org/abs/2610.10379",
+      "kind": "preprint",
+      "category": "持续学习",
+      "level": "重点精读",
+      "tags": [
+        "元学习",
+        "持续学习",
+        "记忆"
+      ],
+      "summary": "通过预先元学习的潜在概念模型，在参数冻结后使用新增证据进行贝叶斯式推断，以适应新类别和环境。",
+      "angle": "持续适应在什么情况下只需要推断，而不需要更新参数？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-03",
+      "title": "Human claustrum neurons encode uncertainty and prediction errors during aversive learning",
+      "authors": "Mingyue Hu et al.",
+      "venue": "Nature Neuroscience",
+      "date": "2026-10-06",
+      "url": "https://doi.org/10.1038/s41593-026-02475-x",
+      "kind": "journal",
+      "category": "自我与意识",
+      "level": "重点精读",
+      "tags": [
+        "元认知",
+        "预测加工",
+        "神经机制"
+      ],
+      "summary": "人类单神经元记录显示屏状核与前扣带皮层编码不确定性和预测误差，但在任务阶段和跨试次时间上的编码模式不同。",
+      "angle": "高级认知变量如何在不同脑区之间分工？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-04",
+      "title": "Differential effects of visual and tactile deprivation on spatially modulated cells in the medial entorhinal cortex",
+      "authors": "Jiayi Tian et al.",
+      "venue": "Nature Communications",
+      "date": "2026-10-06",
+      "url": "https://doi.org/10.1038/s41467-026-78000-2",
+      "kind": "journal",
+      "category": "认知地图",
+      "level": "重点精读",
+      "tags": [
+        "认知地图",
+        "多模态",
+        "海马"
+      ],
+      "summary": "通过小鼠内嗅皮层记录研究视觉和触觉剥夺，揭示不同感觉线索对空间调谐细胞的差异化影响。",
+      "angle": "多模态感觉可靠性如何塑造可迁移的空间表征？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-05",
+      "title": "Cross-Embodiment Robot Foundation World Models with Latent Actions",
+      "authors": "Huang Huang et al.",
+      "venue": "arXiv",
+      "date": "2026-10-07",
+      "url": "https://arxiv.org/abs/2610.10846",
+      "kind": "preprint",
+      "category": "具身智能",
+      "level": "重点精读",
+      "tags": [
+        "跨身体",
+        "潜在动作",
+        "世界模型"
+      ],
+      "summary": "以潜在动作对齐不同机器人形态，实现多身体数据联合建模并改善部分操作基准表现。",
+      "angle": "不同身体之间是否存在可复用的抽象动作结构？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-06",
+      "title": "Inference and learning in sparse autoencoders as natural gradient flow",
+      "authors": "Hadi Vafaii et al.",
+      "venue": "arXiv",
+      "date": "2026-10-05",
+      "url": "https://arxiv.org/abs/2610.07389",
+      "kind": "preprint",
+      "category": "理论与机制",
+      "level": "重点精读",
+      "tags": [
+        "自由能",
+        "表征学习",
+        "自然梯度"
+      ],
+      "summary": "以变分自由能形式统一稀疏特征推断与字典学习，探索循环推断和自然梯度带来的特征恢复收益。",
+      "angle": "自由能思想能否落实为可对照验证的学习算法？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-07",
+      "title": "Modality-specific reactive and predictive responses in the human superior colliculus",
+      "authors": "Danlei Chen et al.",
+      "venue": "Nature Neuroscience",
+      "date": "2026-10-07",
+      "url": "https://doi.org/10.1038/s41593-026-02480-0",
+      "kind": "journal",
+      "category": "具身智能",
+      "level": "重点精读",
+      "tags": [
+        "预测加工",
+        "感觉运动",
+        "主动感知"
+      ],
+      "summary": "7T fMRI 显示人类上丘对视觉和躯体感觉事件具有模态相关的反应与预测性模式。",
+      "angle": "低层感觉运动结构如何参与未来感觉事件预测？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-08",
+      "title": "EmbodiedRSI: Active Continual Robot Learning Through Hypothesis-Guided Co-Evolution",
+      "authors": "Python Song et al.",
+      "venue": "arXiv",
+      "date": "2026-10-07",
+      "url": "https://arxiv.org/abs/2610.10498",
+      "kind": "preprint",
+      "category": "持续学习",
+      "level": "重点精读",
+      "tags": [
+        "主动学习",
+        "机器人",
+        "自我改进"
+      ],
+      "summary": "将假设生成、主动实验、记忆组织和技能迭代结合，使机器人能够针对失败与不确定性收集经验。",
+      "angle": "能否用不确定性驱动学习与探索的切换？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-09",
+      "title": "Neural Decoding as Cognitive Inference",
+      "authors": "Yi Guo et al.",
+      "venue": "arXiv",
+      "date": "2026-10-08",
+      "url": "https://arxiv.org/abs/2610.11923",
+      "kind": "preprint",
+      "category": "脑机接口",
+      "level": "重点精读",
+      "tags": [
+        "神经解码",
+        "贝叶斯推断",
+        "表征"
+      ],
+      "summary": "尝试把神经解码构建为具有潜在认知状态和先验的推断问题，而非只做输入到标签的分类。",
+      "angle": "神经信号能否建立跨任务复用的认知状态空间？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-10",
+      "title": "Tuned inhibitory control of neuronal firing thresholds explains predictive sensorimotor behavior",
+      "authors": "Jungryul Ahn et al.",
+      "venue": "Communications Biology",
+      "date": "2026-10-05",
+      "url": "https://doi.org/10.1038/s42003-026-11082-2",
+      "kind": "journal",
+      "category": "理论与机制",
+      "level": "重点精读",
+      "tags": [
+        "预测编码",
+        "神经抑制",
+        "学习机制"
+      ],
+      "summary": "提出通过调节神经元放电阈值表达预测先验的候选机制，并结合模型与感觉运动任务进行验证。",
+      "angle": "贝叶斯预测能否映射到具体神经细胞机制？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-11",
+      "title": "Sparse Planning in Visual World Models via Cost Gradients",
+      "authors": "Yingchen Xu & Edward Grefenstette",
+      "venue": "NeurIPS 2026（作者标注）",
+      "date": "2026-10-07",
+      "url": "https://arxiv.org/abs/2610.10274",
+      "kind": "preprint",
+      "category": "世界模型",
+      "level": "值得关注",
+      "tags": [
+        "世界模型",
+        "稀疏计算",
+        "规划"
+      ],
+      "summary": "按规划目标梯度动态筛选空间 token，在一些任务中减少规划计算，揭示重要信息的任务依赖性。",
+      "angle": "世界模型是否应该按行动后果选择保留的信息？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-12",
+      "title": "Spatiotemporal encoding signatures of covert speech revealed by source-localized EEG and fMRI",
+      "authors": "Wei Zhang et al.",
+      "venue": "Communications Biology",
+      "date": "2026-10-06",
+      "url": "https://doi.org/10.1038/s42003-026-11102-1",
+      "kind": "journal",
+      "category": "脑机接口",
+      "level": "值得关注",
+      "tags": [
+        "内部言语",
+        "EEG",
+        "fMRI"
+      ],
+      "summary": "结合 EEG 源定位与 fMRI 研究无声内部言语的时空编码特征。",
+      "angle": "内部言语能否成为非侵入式脑机接口的解码目标？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-13",
+      "title": "Multimodal LLMs Can Learn to Read Brain Signals: A Vision–Language Model for Unified Multi-Task EEG Decoding",
+      "authors": "Parastoo Azizeddin et al.",
+      "venue": "arXiv",
+      "date": "2026-10-07",
+      "url": "https://arxiv.org/abs/2610.09355",
+      "kind": "preprint",
+      "category": "脑机接口",
+      "level": "值得关注",
+      "tags": [
+        "EEG",
+        "多模态",
+        "基础模型"
+      ],
+      "summary": "将 EEG 组织为视觉化输入，让视觉语言模型完成多种 EEG 分析任务。",
+      "angle": "通用多模态预训练是否能帮助构建神经信号基础模型？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-14",
+      "title": "LSD reconfigures cortical dynamics through faster brain rhythms and increased fractal dimension",
+      "authors": "V. Subramani et al.",
+      "venue": "Communications Biology",
+      "date": "2026-10-07",
+      "url": "https://doi.org/10.1038/s42003-026-10629-7",
+      "kind": "journal",
+      "category": "自我与意识",
+      "level": "值得关注",
+      "tags": [
+        "意识状态",
+        "致幻剂",
+        "脑动力学"
+      ],
+      "summary": "分析 LSD 条件下皮层振荡与信号复杂性的变化；不应将复杂性变化等同于意识机制的直接证明。",
+      "angle": "改变的意识状态为意识理论提供了哪些可测量变量？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-15",
+      "title": "Adult hippocampal neurogenesis shapes ideomotor action control in mice",
+      "authors": "W. Barde et al.",
+      "venue": "Communications Biology",
+      "date": "2026-10-07",
+      "url": "https://doi.org/10.1038/s42003-026-11112-z",
+      "kind": "journal",
+      "category": "认知地图",
+      "level": "值得关注",
+      "tags": [
+        "海马",
+        "灵活行为",
+        "可塑性"
+      ],
+      "summary": "讨论成年海马神经发生与小鼠目标导向行为和行动灵活性的关系。",
+      "angle": "海马可塑性是否有助于减少持续学习中的行为僵化？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-16",
+      "title": "Thalamocortical credit routing from the basal ganglia and cerebellum: anatomical constraints and circuit principles",
+      "authors": "Sho Tanno et al.",
+      "venue": "bioRxiv",
+      "date": "2026-10-08",
+      "url": "https://doi.org/10.64898/2026.10.02.755501",
+      "kind": "preprint",
+      "category": "理论与机制",
+      "level": "值得关注",
+      "tags": [
+        "信用分配",
+        "小脑",
+        "神经学习"
+      ],
+      "summary": "从神经环路结构出发讨论基底节、小脑与丘脑-皮层系统中的信用分配。",
+      "angle": "生物神经结构能否启发更局部、更高效的学习规则？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-17",
+      "title": "MetaLearnNCA: Few-Shot Offline Meta-Learning via Interacting Neural Cellular Automata",
+      "authors": "Etienne Guichard & Stefano Nichele",
+      "venue": "arXiv",
+      "date": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.08479",
+      "kind": "preprint",
+      "category": "持续学习",
+      "level": "值得关注",
+      "tags": [
+        "元学习",
+        "元胞自动机",
+        "自组织"
+      ],
+      "summary": "以相互作用的神经元胞自动机探索少样本元学习，关注局部动态的适应能力。",
+      "angle": "无中心的局部学习能否涌现通用归纳偏置？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-18",
+      "title": "Workhorse: Learning Robust Whole-Body Humanoid Loco-Manipulation from Human Data",
+      "authors": "Songbo Hu et al.",
+      "venue": "arXiv",
+      "date": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.09117",
+      "kind": "preprint",
+      "category": "具身智能",
+      "level": "值得关注",
+      "tags": [
+        "人形机器人",
+        "动作迁移",
+        "模仿学习"
+      ],
+      "summary": "用人类数据支持人形机器人的全身移动与操作能力，并结合控制系统完成动作执行。",
+      "angle": "人类与机器人之间的动作表示如何对齐？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-19",
+      "title": "FreeEvolve: Learning to Evolve Beyond Fixed Loops",
+      "authors": "Lecheng Kong et al.",
+      "venue": "arXiv",
+      "date": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.09197",
+      "kind": "preprint",
+      "category": "AGI与智能体",
+      "level": "值得关注",
+      "tags": [
+        "自我改进",
+        "元搜索",
+        "优化"
+      ],
+      "summary": "尝试让系统优化迭代搜索程序本身，而不仅是搜索出的候选结果。",
+      "angle": "改进策略是否能够跨任务迁移，而非过拟合评测？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-20",
+      "title": "Game theory driven multi-agent framework mitigates language model hallucination",
+      "authors": "Runzhe Liu et al.",
+      "venue": "Nature Communications",
+      "date": "2026-10-07",
+      "url": "https://doi.org/10.1038/s41467-026-78213-5",
+      "kind": "journal",
+      "category": "AGI与智能体",
+      "level": "值得关注",
+      "tags": [
+        "模型幻觉",
+        "多智能体",
+        "推理"
+      ],
+      "summary": "通过博弈论驱动的多智能体协作与训练改善特定领域模型的可靠性。",
+      "angle": "如何衡量模型知识推断的可信程度？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-21",
+      "title": "A neuro-inspired computational framework for AGI: predictive coding, active inference and free energy minimisation",
+      "authors": "Lioba C. S. Berndt & Alexander D. Shaw",
+      "venue": "Frontiers in Human Neuroscience",
+      "date": "2026-10-08",
+      "url": "https://doi.org/10.3389/fnhum.2026.1917153",
+      "kind": "perspective",
+      "category": "理论与机制",
+      "level": "延伸阅读",
+      "tags": [
+        "自由能原理",
+        "AGI",
+        "主动推断"
+      ],
+      "summary": "概念性地整合预测编码、主动推断与自由能最小化。论文主要是理论框架，不是 AGI 实验验证。",
+      "angle": "统一理论应如何转化为可证伪的算法假设？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-22",
+      "title": "Characterizing the role of reasoning tokens in large language models as state over tokens",
+      "authors": "Mosh Levy et al.",
+      "venue": "Nature Machine Intelligence",
+      "date": "2026-10-07",
+      "url": "https://doi.org/10.1038/s42256-026-01303-y",
+      "kind": "perspective",
+      "category": "自我与意识",
+      "level": "延伸阅读",
+      "tags": [
+        "推理状态",
+        "元认知",
+        "可解释性"
+      ],
+      "summary": "讨论推理 token 的计算状态功能，不应把语言输出直接等同于内部思维过程。",
+      "angle": "如何在不依赖语言自报告的情况下评估 AI 元认知？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-23",
+      "title": "Learning to Learn a Language",
+      "authors": "Lennart Carstens-Behrens & Holger Fröhlich",
+      "venue": "arXiv",
+      "date": "2026-10-05",
+      "url": "https://arxiv.org/abs/2610.05879",
+      "kind": "preprint",
+      "category": "持续学习",
+      "level": "延伸阅读",
+      "tags": [
+        "元学习",
+        "语言习得",
+        "归纳偏置"
+      ],
+      "summary": "研究通过元训练习得语言学习策略的可行性，与大规模语言预训练路线形成对照。",
+      "angle": "学习能力能否通过可迁移的归纳偏置获得？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-24",
+      "title": "Embodied Turing Machines: Stateful Code for Robot Recursive Self-Improvement",
+      "authors": "Kairui Hu et al.",
+      "venue": "arXiv",
+      "date": "2026-10-08",
+      "url": "https://arxiv.org/abs/2610.12369",
+      "kind": "preprint",
+      "category": "具身智能",
+      "level": "延伸阅读",
+      "tags": [
+        "机器人",
+        "程序状态",
+        "自我改进"
+      ],
+      "summary": "通过可执行代码与环境状态表示组织机器人策略迭代；不构成机器人具备意识的证据。",
+      "angle": "结构化状态能否帮助机器人高效迭代策略？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    },
+    {
+      "id": "w41-25",
+      "title": "When ‘I’ and ‘You’ blur: self–other distinction failure and empathy dysregulation in schizophrenia",
+      "authors": "C. Huang et al.",
+      "venue": "Translational Psychiatry",
+      "date": "2026-10-09",
+      "url": "https://doi.org/10.1038/s41398-026-04514-4",
+      "kind": "review",
+      "category": "自我与意识",
+      "level": "延伸阅读",
+      "tags": [
+        "自他区分",
+        "意识",
+        "社会认知"
+      ],
+      "summary": "梳理精神分裂症中自我-他人区分、共情与临床症状之间的联系。",
+      "angle": "自我表征应被拆分为哪些可操作的层级？",
+      "origin": "上期人工精选",
+      "evidence": "摘要/元数据级别；建议以原文核对"
+    }
+  ],
+  "deepdives": [
+    {
+      "id": "w41-01",
+      "headline": "可预测 ≠ 对决策有用",
+      "insight": "RoboJEPA 将潜在预测误差与机器人规划质量联系起来，但潜在表征是否保留低频、关键且难预测的任务信息，仍需专门实验检验。",
+      "experiment": "比较纯预测 JEPA、任务相关信息约束 JEPA 与结构化表征模型，在背景干扰、奖励切换、稀有障碍任务中的迁移效率。"
+    },
+    {
+      "id": "w41-02",
+      "headline": "推断、检索与权重更新之间，谁来做选择？",
+      "insight": "冻结参数、通过新证据推断的策略降低遗忘风险，但其适应范围受到元训练分布、上下文容量与记忆检索质量的限制。",
+      "experiment": "在环境变化强度可控的 POMDP 中，比较持续微调、记忆推断和基于置信度的混合切换机制。"
+    },
+    {
+      "id": "w41-04",
+      "headline": "认知地图如何跨感官稳定？",
+      "insight": "视觉或触觉缺失对空间细胞的影响随环境线索而异，说明空间表示可能依赖跨模态整合而非单一感官的特征。",
+      "experiment": "构建视觉与触觉可分离的导航环境，测试跨感官遮蔽时地图拓扑、重新定位效率与下游导航性能。"
+    },
+    {
+      "id": "w41-03",
+      "headline": "不确定性是高阶内部状态",
+      "insight": "屏状核与前扣带皮层可编码模型估计的预测误差与不确定性，但持续编码的时间特征不同。该结果不能直接证明相关脑区产生意识。",
+      "experiment": "让智能体显式估计对自身状态信念的置信度，测试其是否提升噪声环境中的主动感知与任务迁移。"
+    },
+    {
+      "id": "w41-06",
+      "headline": "从宏大自由能原理走向具体算法",
+      "insight": "通过循环推断与自然梯度讨论稀疏表征，可以对照测量机制级改进；但优化性能不能反推整个神经自由能理论成立。",
+      "experiment": "在特征稀有程度和组合结构变化的连续学习任务上，比较标准 SAE、循环推断、自然梯度及组合模型。"
+    }
+  ]
+}

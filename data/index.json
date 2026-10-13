@@ -1,0 +1,14 @@
+{
+  "site": "NeuroAI Radar",
+  "updated_at": "2026-10-13",
+  "weeks": [
+    {
+      "id": "2026-W41",
+      "title": "预测、记忆与认知地图",
+      "from_date": "2026-10-05",
+      "to_date": "2026-10-11",
+      "count": 25,
+      "curation": "人工精选·试刊"
+    }
+  ]
+}

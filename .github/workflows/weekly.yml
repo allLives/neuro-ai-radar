@@ -1,0 +1,93 @@
+name: Weekly NeuroAI Digest
+
+on:
+  schedule:
+    # Monday 08:23 Asia/Shanghai (UTC+8)
+    - cron: '23 0 * * 1'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'update: collect and archive; verify: live APIs without writing; deploy: build only'
+        type: choice
+        options: [update, verify, deploy]
+        default: update
+      report_date:
+        description: 'Optional YYYY-MM-DD: collect the preceding complete week (backfill only; existing issues are preserved)'
+        type: string
+        required: false
+  push:
+    branches: [main]
+    paths-ignore: ['README.md']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: neuroai-pages
+  cancel-in-progress: false
+
+jobs:
+  collect-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run offline data quality tests
+        run: python -m unittest discover -s tests -v
+      - name: Collect weekly research papers
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.mode != 'deploy')
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || secrets.OPENAI_MODEL || 'gpt-4o-mini' }}
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          REPORT_DATE: ${{ inputs.report_date }}
+          RUN_MODE: ${{ inputs.mode }}
+        shell: bash
+        run: |
+          args=()
+          if [[ -n "$REPORT_DATE" ]]; then args+=(--date "$REPORT_DATE"); fi
+          if [[ "$RUN_MODE" == 'verify' ]]; then args+=(--check); fi
+          python -u scripts/update_digest.py "${args[@]}"
+      - name: Regenerate and validate browsable archive
+        run: |
+          python scripts/build.py
+          python -m unittest discover -s tests -v
+      - name: Preserve new reports in Git history
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'update')
+        run: |
+          git config user.name 'neuroai-radar-bot'
+          git config user.email 'neuroai-radar-bot@users.noreply.github.com'
+          git add data/ assets/data.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: publish the weekly neuro-AI digest'
+            # GITHUB_TOKEN pushes do not trigger another push workflow.
+            # No force-push: concurrent external changes fail safely.
+            git push origin HEAD:main
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
+  deploy:
+    needs: collect-and-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
