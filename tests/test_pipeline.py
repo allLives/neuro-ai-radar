@@ -81,6 +81,19 @@ class DigestTests(unittest.TestCase):
                  paper(url='javascript:alert(1)'),paper(url='https://user:password@example.org/paper')]
         self.assertEqual(radar.dedupe_and_rank(records,set(),START,END),[])
 
+    def test_flagship_venue_names_do_not_match_generic_science_journals(self):
+        self.assertEqual(radar.venue_bonus('Science'),4)
+        self.assertEqual(radar.venue_bonus('Cell'),4)
+        self.assertEqual(radar.venue_bonus('Protein Science'),0)
+        self.assertEqual(radar.venue_bonus('Eurasia Journal of Mathematics Science and Technology Education'),0)
+        self.assertGreater(radar.venue_bonus('Robotics: Science and Systems'),0)
+
+    def test_education_and_application_papers_are_not_core_metacognition(self):
+        records=[paper(title='Metacognitive Reading Skills Practices and Learners Critical Reading Performance',kind='journal',venue_indexed=True),
+                 paper(title='DreamFold: A World Model to generate protein folding pathways',kind='journal',venue='Protein Science',venue_indexed=True),
+                 paper(title='Robot Obstacle Avoidance in Warehouse Devices',kind='conference',venue='Unrelated conference',venue_indexed=True)]
+        self.assertEqual(radar.dedupe_and_rank(records,set(),START,END),[])
+
     def test_unknown_repository_and_unindexed_journal_excluded(self):
         records=[paper(kind='unknown',venue='Zenodo'),paper(venue='Zenodo'),
                  paper(kind='journal',venue='Unindexed Journal',venue_indexed=False)]

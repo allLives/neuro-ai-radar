@@ -61,7 +61,7 @@ CATEGORIES={
  '理论与机制':['free energy principle','active inference','predictive coding','synaptic plasticity','neural plasticity','brain-inspired','brain inspired','self-organizing learning','self organising learning'],
  'AGI与智能体':['artificial general intelligence','general intelligence','recursive self-improv','autonomous agent'],
 }
-BONUS_VENUE=[('nature',3),('nature neuroscience',5),('nature machine intelligence',5),('nature human behaviour',4),('science',4),('cell',4),('neuron',5),('nature communications',3),('pnas',3),('iclr',3),('neurips',3),('icml',3),('corl',3),('cosyne',3),('rss',3),('robotics science and systems',3),('current biology',2),('elife',2)]
+BONUS_VENUE=[('nature',3),('nature neuroscience',5),('nature machine intelligence',5),('nature human behaviour',4),('science',4),('cell',4),('neuron',5),('nature communications',3),('pnas',3),('iclr',3),('neurips',3),('icml',3),('corl',3),('cosyne',3),('rss',3),('advances in neural information processing systems',3),('international conference on learning representations',3),('international conference on machine learning',3),('conference on robot learning',3),('robotics science and systems',3),('computational and systems neuroscience',3),('ieee international conference on robotics and automation',2),('robotics science and systems',3),('current biology',2),('elife',2)]
 
 
 def safe_error(exc):
@@ -274,6 +274,18 @@ def paper_keys(p):
   return keys
 
 
+def venue_bonus(venue):
+  venue=re.sub(r'[^a-z0-9]+',' ',venue.lower()).strip()
+  bonuses=[]
+  for name,bonus in BONUS_VENUE:
+    # Science/Cell/Nature are exact journal names, not words in unrelated venue names.
+    if name in ('science','cell','nature','neuron'):
+      matched=venue==name
+    else:matched=bool(re.search(r'(?<![a-z])'+re.escape(name)+r'(?![a-z])',venue))
+    if matched:bonuses.append(bonus)
+  return max(bonuses,default=0)
+
+
 def label_and_score(p):
   text=clean_text(p['title']+' '+p.get('abstract','')).lower().replace('–','-')
   title=p['title'].lower().replace('–','-')
@@ -284,15 +296,15 @@ def label_and_score(p):
   # Biomedical/AI context avoids physics free energy, financial robots, and LLM hallucination noise.
   context=bool(re.search(r'brain|neur(?:al|on|oscience)|cogniti|hippocamp|cortex|cortical|human|patient|mouse|mice|robot|embodied|learning|intelligence|agent|jepa|world model|sleep|dream',text))
   llm_noise=cat=='梦与幻觉' and bool(re.search(r'language model|\bllm',text)) and not re.search(r'brain|patient|sleep|psychedelic|cortical',text)
-  peripheral_application=bool(re.search(r'financial|earnings call|stock market|cyberattack|malware|fraud detection|healthcare simulation|fall risk|osteoporosis',title))
+  peripheral_application=bool(re.search(r'financial|earnings call|stock market|cyberattack|malware|fraud detection|healthcare simulation|fall risk|osteoporosis|physics courses|critical reading performance|reading skills practices|secondary students|medical education|gender equality|social wellbeing|protein folding|nanoplatform|drug delivery',title))
   # Self-awareness used in a clinical questionnaire/education context is not a self-model mechanism.
   self_context=(cat!='自我与意识' or bool(re.search(r'brain|neur(?:al|on|oscience)|cogniti|cortex|cortical|conscious|body ownership|bodily self|subjective|sense of agency|self.model',text)))
   relevant=topical>=6 and context and self_context and not llm_noise and not peripheral_application
   venue=(p.get('venue') or '').lower()
-  bonus=max((b for name,b in BONUS_VENUE if re.search(r'(?<![a-z])'+re.escape(name)+r'(?![a-z])',venue)),default=0)
+  bonus=venue_bonus(venue)
   # Exclude unaudited repository uploads and unindexed journals from auto-selection.
   trusted_preprint=bool(re.search(r'arxiv|biorxiv|medrxiv|research square',venue))
-  quality=(p.get('kind')=='preprint' and trusted_preprint) or (p.get('kind') in ('journal','review','conference') and (bonus>0 or p.get('venue_indexed',False)))
+  quality=(p.get('kind')=='preprint' and trusted_preprint) or (p.get('kind') in ('journal','review') and (bonus>0 or p.get('venue_indexed',False))) or (p.get('kind')=='conference' and bonus>0)
   relevant=relevant and quality
   p.update(category=cat,tags=[t for t in CATEGORIES[cat] if matches(t,text)][:3] or [cat],
            _relevant=relevant,_score=round(topical+bonus*2+(0.8 if p.get('kind')=='journal' else 0),2))
