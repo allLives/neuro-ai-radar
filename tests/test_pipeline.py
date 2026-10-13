@@ -32,6 +32,16 @@ def paper(**changes):
     p.update(changes);return p
 
 
+def fixture_archive(root):
+    """Use only a pinned fixture, never the growing production archive."""
+    (root/'data/weeks').mkdir(parents=True)
+    shutil.copy2(BASE/'data/weeks/2026-W41.json',root/'data/weeks/2026-W41.json')
+    issue=json.loads((root/'data/weeks/2026-W41.json').read_text())
+    index=dict(site='Fixture',updated_at='2026-10-13',weeks=[dict(id=issue['id'],title=issue['title'],
+               from_date=issue['from_date'],to_date=issue['to_date'],count=len(issue['articles']),curation=issue['curation'])])
+    (root/'data/index.json').write_text(json.dumps(index))
+
+
 class DigestTests(unittest.TestCase):
     def test_date_filter(self):
         for date in ('2026-10-05','2026-10-07','2026-10-11'):
@@ -177,7 +187,7 @@ class DigestTests(unittest.TestCase):
 
     def test_api_failure_leaves_all_archives_untouched(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=pathlib.Path(tmp);shutil.copytree(BASE/'data',root/'data')
+            root=pathlib.Path(tmp);fixture_archive(root)
             before={str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*.json')}
             with mock.patch.object(radar,'ROOT',root),mock.patch('sys.argv',['update','--date','2026-10-05']),mock.patch.object(radar,'from_openalex',return_value=[]),mock.patch.object(radar,'from_arxiv',return_value=[]),mock.patch.object(radar,'from_europepmc',return_value=[]):
                 with self.assertRaises(SystemExit) as err:radar.main()
@@ -199,7 +209,7 @@ class DigestTests(unittest.TestCase):
     def test_one_source_outage_allows_archive_and_check_never_writes(self):
         for mode in ('update','check'):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as tmp:
-                root=pathlib.Path(tmp);shutil.copytree(BASE/'data',root/'data')
+                root=pathlib.Path(tmp);fixture_archive(root)
                 records=[paper(title=f'World Models for Robot Learning Fixture {i}',url=f'https://arxiv.org/abs/2609.0000{i}',date='2026-10-01') for i in range(5)]
                 argv=['update','--date','2026-10-05']+(['--check'] if mode=='check' else [])
                 with mock.patch.object(radar,'ROOT',root),mock.patch('sys.argv',argv),mock.patch.dict(os.environ,{},clear=True),mock.patch.object(radar,'from_openalex',return_value=[]),mock.patch.object(radar,'from_arxiv',return_value=records),mock.patch.object(radar,'from_europepmc',return_value=[]),contextlib.redirect_stdout(io.StringIO()):
@@ -213,7 +223,7 @@ class DigestTests(unittest.TestCase):
 
     def test_build_removes_stale_and_private_files(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=pathlib.Path(tmp);shutil.copytree(BASE/'data',root/'data');shutil.copytree(BASE/'assets',root/'assets')
+            root=pathlib.Path(tmp);fixture_archive(root);shutil.copytree(BASE/'assets',root/'assets')
             shutil.copy2(BASE/'index.html',root/'index.html');(root/'dist').mkdir()
             (root/'dist/old-secret.txt').write_text('synthetic');(root/'assets/.env').write_text('synthetic')
             builder.build(root)
@@ -221,9 +231,22 @@ class DigestTests(unittest.TestCase):
             self.assertEqual({p.name for p in (root/'dist/assets').iterdir()},set(builder.PUBLIC_ASSETS))
             self.assertTrue((root/'dist/.nojekyll').exists())
 
+    def test_build_with_multiple_archives_and_orphan_recovery(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp);fixture_archive(root);shutil.copytree(BASE/'assets',root/'assets')
+            shutil.copy2(BASE/'index.html',root/'index.html')
+            issue=json.loads((root/'data/weeks/2026-W41.json').read_text())
+            issue.update(id='2026-W42',from_date='2026-10-12',to_date='2026-10-18',edition=42)
+            for article in issue['articles']:article['date']='2026-10-13'
+            (root/'data/weeks/2026-W42.json').write_text(json.dumps(issue))
+            builder.build(root)
+            weeks=json.loads((root/'data/index.json').read_text())['weeks']
+            self.assertEqual([w['id'] for w in weeks],['2026-W42','2026-W41'])
+            self.assertTrue((root/'dist/data/weeks/2026-W42.json').exists())
+
     def test_build_fails_for_missing_manifest_archive(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=pathlib.Path(tmp);shutil.copytree(BASE/'data',root/'data')
+            root=pathlib.Path(tmp);fixture_archive(root)
             index=json.loads((root/'data/index.json').read_text());index['weeks'].append({'id':'2026-W39'})
             (root/'data/index.json').write_text(json.dumps(index))
             with self.assertRaisesRegex(ValueError,'missing archives'):builder.build(root)
