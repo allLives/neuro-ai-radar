@@ -101,4 +101,3 @@ data/weeks/2026-W41.json      上周文献
 未配置 `OPENAI_API_KEY`、无摘要或调用失败时，只保存真实元数据与英文摘要摘录，并显示“尚未生成 AI 解读”；保留来源摘要以便核查。AI 响应只能填写解读字段，不能改写书目信息；模型猜想及实验建议独立标识。默认 `gpt-4o-mini`，其 JSON 输出接口要求以 [OpenAI 官方文档](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat) 为准。
 
 会议接收不能通过预印本评论核实；只有会议论文集元数据才显示会议发表。当前不接入会议官方接收名单，可能漏收仅有接收通知的论文。2026-W41 试刊保留原始内容及未完全复核提示，不代表自动检索的核查结果。
-

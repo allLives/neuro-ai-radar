@@ -66,6 +66,8 @@ class DigestTests(unittest.TestCase):
     def test_reject_keyword_noise_and_unsafe_links(self):
         records=[paper(title='LLM hallucinations in financial documents',abstract='Language model hallucination tests.'),
                  paper(title='Free energy in molecular cells',abstract='Thermodynamic free energy analysis.',venue='Science'),
+                 paper(title='Continual Learning for Financial Earnings Call Speech',abstract='Neural meta-learning methods.'),
+                 paper(title='Self-awareness of fall risk in older patients with osteoporosis',abstract='Human self-awareness questionnaire.',kind='journal',venue='Nature'),
                  paper(url='javascript:alert(1)'),paper(url='https://user:password@example.org/paper')]
         self.assertEqual(radar.dedupe_and_rank(records,set(),START,END),[])
 

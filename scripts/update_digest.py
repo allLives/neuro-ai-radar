@@ -284,7 +284,10 @@ def label_and_score(p):
   # Biomedical/AI context avoids physics free energy, financial robots, and LLM hallucination noise.
   context=bool(re.search(r'brain|neur(?:al|on|oscience)|cogniti|hippocamp|cortex|cortical|human|patient|mouse|mice|robot|embodied|learning|intelligence|agent|jepa|world model|sleep|dream',text))
   llm_noise=cat=='梦与幻觉' and bool(re.search(r'language model|\bllm',text)) and not re.search(r'brain|patient|sleep|psychedelic|cortical',text)
-  relevant=topical>=6 and context and not llm_noise
+  peripheral_application=bool(re.search(r'financial|earnings call|stock market|cyberattack|malware|fraud detection|healthcare simulation|fall risk|osteoporosis',title))
+  # Self-awareness used in a clinical questionnaire/education context is not a self-model mechanism.
+  self_context=(cat!='自我与意识' or bool(re.search(r'brain|neur(?:al|on|oscience)|cogniti|cortex|cortical|conscious|body ownership|bodily self|subjective|sense of agency|self.model',text)))
+  relevant=topical>=6 and context and self_context and not llm_noise and not peripheral_application
   venue=(p.get('venue') or '').lower()
   bonus=max((b for name,b in BONUS_VENUE if re.search(r'(?<![a-z])'+re.escape(name)+r'(?![a-z])',venue)),default=0)
   # Exclude unaudited repository uploads and unindexed journals from auto-selection.
