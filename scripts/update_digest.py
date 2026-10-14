@@ -339,6 +339,11 @@ def dedupe_and_rank(records,existing,start,end):
 
 def fallback(issue):
   """Auto index when no paid model API key is provided; never fabricate analyses."""
+  try:
+    from scripts.editorial import topic_title
+  except ModuleNotFoundError:
+    from editorial import topic_title
+  if issue.get('title')=='本周神经科学 × AI 精选':issue['title']=topic_title(issue['articles'])
   for i,p in enumerate(issue['articles']):
     p['level']='重点精读' if i<5 else '值得关注' if i<15 else '延伸阅读'
     abstract=p.get('abstract','')

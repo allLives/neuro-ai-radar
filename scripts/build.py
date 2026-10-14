@@ -6,6 +6,10 @@ import re
 import shutil
 import tempfile
 from pathlib import Path
+try:
+    from scripts.editorial import apply_editorial
+except ModuleNotFoundError:
+    from editorial import apply_editorial
 
 ROOT=Path(__file__).resolve().parents[1]
 PUBLIC_ASSETS=('styles.css','app.js','favicon.svg','data.js','theme.js','editorial-art.svg','aero-landscape.svg')
@@ -35,8 +39,12 @@ def build(root=ROOT):
     index=json.loads((root/'data/index.json').read_text(encoding='utf-8'))
     issues={}
     for path in sorted((root/'data/weeks').glob('*.json'),reverse=True):
-        issue=json.loads(path.read_text(encoding='utf-8'))
-        validate_issue(issue,path.stem);issues[path.stem]=issue
+        source=path.read_bytes();issue=json.loads(source)
+        validate_issue(issue,path.stem)
+        editorial_path=root/'data/editorial'/path.name
+        supplement=json.loads(editorial_path.read_text(encoding='utf-8')) if editorial_path.exists() else None
+        issues[path.stem]=apply_editorial(issue,supplement,source)
+        validate_issue(issues[path.stem],path.stem)
     if not issues:raise ValueError('No weekly archives found')
     missing={w['id'] for w in index['weeks']}-issues.keys()
     if missing:raise ValueError(f'Manifest references missing archives: {sorted(missing)}')
@@ -52,7 +60,8 @@ def build(root=ROOT):
         for name in PUBLIC_ASSETS:
             if name=='data.js':(stage/'assets'/name).write_text(bundle,encoding='utf-8')
             else:shutil.copy2(root/'assets'/name,stage/'assets'/name)
-        for week_id in issues:shutil.copy2(root/'data/weeks'/f'{week_id}.json',stage/'data/weeks'/f'{week_id}.json')
+        for week_id,issue in issues.items():
+            (stage/'data/weeks'/f'{week_id}.json').write_text(json.dumps(issue,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         (stage/'data/index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         (stage/'.nojekyll').touch()
         dist=root/'dist'
