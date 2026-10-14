@@ -19,7 +19,8 @@
   function renderMain(){
     const w=getWeek(); if(!w)return;
     $('crumbWeek').textContent=w.id.replace('-',' ');
-    $('heroEdition').textContent=`/ ISSUE NO. ${String(w.edition||w.id.split('W')[1]).padStart(3,'0')}`;
+    $('heroTitle').textContent=w.title||'本周神经科学 × AI 精选';
+    $('heroEdition').textContent=`NO. ${String(w.edition||w.id.split('W')[1]).padStart(3,'0')}`;
     $('heroDescription').textContent=w.subtitle||'从神经科学到通用人工智能，精选值得认真思考的研究。';
     $('heroDate').textContent=`${fmtDate(w.from_date)} — ${w.to_date?.slice(5).replace('-','.')}`;
     $('heroCuration').textContent=w.curation||'自动收录';
@@ -47,22 +48,23 @@
     $('papers').innerHTML=items.map(a=>{
       const level=a.level==='重点精读'?'':a.level==='值得关注'?'gold':'dim';
       const source=a.kind==='journal'?'':a.kind==='preprint'?'dim':'gold';
-      return `<article class="paper"><div class="paper-top"><span class="badge ${level}">${esc(a.level)}</span><span class="badge ${source}">${esc(displayKind(a.kind))}</span><span class="paper-date">${esc(a.date)}</span></div><h3>${esc(a.title)}</h3><p class="paper-author">${esc(a.authors)} · ${esc(a.venue)}</p><p class="paper-summary">${esc(a.summary||a.abstract||'已自动收录；请查看原文摘要。')}</p>${a.evidence?`<p class="method-hint">${esc(a.evidence)}</p>`:''}<div class="paper-footer"><div class="paper-tags">${(a.tags||[]).slice(0,3).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div><a class="paper-link" href="${esc(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer" aria-label="阅读 ${esc(a.title)} 原文">原文 ↗</a></div>${a.angle?`<div class="paper-angle">研究追问 · ${esc(a.angle)}</div>`:''}</article>`
+      return `<article class="paper"><div class="paper-top"><span class="paper-index">${String(w.articles.indexOf(a)+1).padStart(2,'0')}</span><span class="badge ${level}">${esc(a.level)}</span><span class="badge ${source}">${esc(displayKind(a.kind))}</span><span class="paper-date">${esc(a.date)}</span></div><h3>${esc(a.title)}</h3><p class="paper-author">${esc(a.authors)} · ${esc(a.venue)}</p><p class="paper-summary">${esc(a.summary||a.abstract||'已自动收录；请查看原文摘要。')}</p>${a.evidence?`<p class="method-hint">${esc(a.evidence)}</p>`:''}<div class="paper-footer"><div class="paper-tags">${(a.tags||[]).slice(0,3).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div><a class="paper-link" href="${esc(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer" aria-label="阅读 ${esc(a.title)} 原文">原文 ↗</a></div>${a.angle?`<div class="paper-angle">研究追问 · ${esc(a.angle)}</div>`:''}</article>`
     }).join('');
   }
   function renderDeep(){const w=getWeek(); const list=w?.deepdives||[];
     $('deepDives').innerHTML=list.length?list.map((d,i)=>`<article class="deep-card"><div class="deep-n">RESEARCH NOTE / ${String(i+1).padStart(2,'0')}</div><h3>${esc(d.headline)}</h3><p>${esc(d.insight)}</p><div class="deep-experiment"><span>可验证的小实验 / EXPERIMENT IDEA</span>${esc(d.experiment)}</div></article>`).join(''):'<div class="deep-card"><div class="deep-n">RESEARCH NOTE</div><h3>本期没有可靠的深度分析</h3><p>若元数据不足或自动摘要失败，不会虚构研究评价。</p></div>';
   }
-  function switchWeek(id){if(!DATA.issues[id])return;state.week=id;renderMain();history.replaceState(null,'',`#issue=${encodeURIComponent(id)}`);$('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'})}
+  function switchWeek(id){if(!DATA.issues[id])return;state.week=id;renderMain();history.replaceState(null,'',`#issue=${encodeURIComponent(id)}`);$('sidebar').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false');window.scrollTo({top:0,behavior:'smooth'})}
   $('searchInput').addEventListener('input',e=>{state.query=e.target.value;renderPapers()});
   $('categorySelect').addEventListener('change',e=>{state.category=e.target.value;updatePills();renderPapers()});
   $('levelSelect').addEventListener('change',e=>{state.level=e.target.value;renderPapers()});
   $('resetFilter').addEventListener('click',()=>{state.query='';state.category='all';state.level='all';$('searchInput').value='';$('categorySelect').value='all';$('levelSelect').value='all';updatePills();renderPapers()});
-  $('navDigest').addEventListener('click',()=>{$('briefingAnchor').scrollIntoView({behavior:'smooth'});$('sidebar').classList.remove('open')});
-  $('navFeatured').addEventListener('click',()=>{$('featuredAnchor').scrollIntoView({behavior:'smooth'});$('sidebar').classList.remove('open')});
-  $('navArchive').addEventListener('click',()=>{$('issueList').scrollIntoView({behavior:'smooth'});$('sidebar').classList.toggle('open',window.innerWidth<=900)});
-  $('menuToggle').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
-  document.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();$('searchInput').focus()}if(e.key==='Escape'){$('searchInput').blur();$('sidebar').classList.remove('open')}});
+  $('navDigest').addEventListener('click',()=>{$('briefingAnchor').scrollIntoView({behavior:'smooth'});$('sidebar').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false')});
+  $('navFeatured').addEventListener('click',()=>{$('featuredAnchor').scrollIntoView({behavior:'smooth'});$('sidebar').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false')});
+  $('navArchive').addEventListener('click',()=>{$('archiveDisclosure').open=!$('archiveDisclosure').open;if($('archiveDisclosure').open)$('archiveDisclosure').scrollIntoView({behavior:'smooth',block:'nearest'});$('sidebar').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false')});
+  $('archiveDisclosure').addEventListener('toggle',()=>{$('navArchive').setAttribute('aria-expanded',String($('archiveDisclosure').open))});
+  $('menuToggle').addEventListener('click',()=>{const open=$('sidebar').classList.toggle('open');$('menuToggle').setAttribute('aria-expanded',String(open))});
+  document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('settingsDialog').open&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();$('searchInput').focus()}if(e.key==='Escape'){$('searchInput').blur();$('sidebar').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false')}});
   $('copyLink').addEventListener('click',async()=>{try{const link=new URL(window.location.href);link.hash=`issue=${encodeURIComponent(state.week)}`;await navigator.clipboard.writeText(link.href);toast('已复制本期链接')}catch{toast('可直接复制浏览器地址栏链接')}});
   const readFragment=()=>{try{return decodeURIComponent((location.hash.match(/issue=([^&]+)/)||[])[1]||'')}catch{return ''}};
   const frag=readFragment();

@@ -8,7 +8,7 @@ import tempfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-PUBLIC_ASSETS=('styles.css','app.js','favicon.svg','data.js')
+PUBLIC_ASSETS=('styles.css','app.js','favicon.svg','data.js','theme.js','editorial-art.svg','aero-landscape.svg')
 
 
 def validate_issue(issue,week_id):
