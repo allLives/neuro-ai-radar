@@ -1,7 +1,15 @@
 {
   "site": "NeuroAI Radar",
-  "updated_at": "2026-10-13",
+  "updated_at": "2026-10-19",
   "weeks": [
+    {
+      "id": "2026-W42",
+      "title": "具身智能、世界模型、脑机接口",
+      "from_date": "2026-10-12",
+      "to_date": "2026-10-18",
+      "count": 25,
+      "curation": "文献自动索引"
+    },
     {
       "id": "2026-W41",
       "title": "预测、记忆与认知地图",
