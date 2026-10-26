@@ -1,7 +1,15 @@
 {
   "site": "NeuroAI Radar",
-  "updated_at": "2026-10-19",
+  "updated_at": "2026-10-26",
   "weeks": [
+    {
+      "id": "2026-W43",
+      "title": "具身智能、世界模型、认知地图",
+      "from_date": "2026-10-19",
+      "to_date": "2026-10-25",
+      "count": 25,
+      "curation": "文献自动索引"
+    },
     {
       "id": "2026-W42",
       "title": "预测误差、行动与身体自我",
